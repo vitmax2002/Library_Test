@@ -2,6 +2,7 @@ package library.service;
 
 import library.model.Book;
 import library.model.BorrowedBook;
+import library.model.BorrowedBookDto;
 import library.model.Client;
 import library.repository.BookRepository;
 import library.repository.BorrowedBookRepository;

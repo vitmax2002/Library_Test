@@ -1,7 +1,7 @@
 package library.controller;
 
 import library.model.BorrowedBook;
-import library.service.BorrowedBookDto;
+import library.model.BorrowedBookDto;
 import library.service.BorrowedBookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

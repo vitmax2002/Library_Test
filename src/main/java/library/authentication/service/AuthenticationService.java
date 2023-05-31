@@ -1,8 +1,6 @@
 package library.authentication.service;
 
-import library.authentication.AuthenticationRequest;
-import library.authentication.AuthenticationResponse;
-import library.authentication.RegisterRequest;
+import library.authentication.*;
 import library.model.Authority;
 import library.model.Authority2;
 import library.model.User;
@@ -36,14 +34,14 @@ public class AuthenticationService {
         this.authenticationManager=authenticationManager;
     }
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterDto request) {
         User user=new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUsername(request.username());
+        user.setPassword(passwordEncoder.encode(request.password()));
         Authority2 authority2=null;
 
         for (Authority2 au : Authority2.values()) {
-            if (au.name().equals(request.getAuthority())) {
+            if (au.name().equals(request.authority())) {
                 authority2 = au;
                 break;
             }
@@ -68,11 +66,11 @@ public class AuthenticationService {
      return "Accountul cu username:"+s+" a fost sters";
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request)
+    public AuthenticationResponse authenticate(AuthenticationDto request)
     {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getUsername(),request.getPassword()));
-        var user=userRepository.findByUsername(request.getUsername()).orElseThrow();
+                request.username(),request.password()));
+        var user=userRepository.findByUsername(request.username()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
     }

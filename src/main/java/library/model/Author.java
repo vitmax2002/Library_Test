@@ -1,8 +1,10 @@
 package library.model;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,12 +16,14 @@ public class Author {
     @Column(name = "first_name", length=45)
     private String firstName;
 
+
     @Column(name = "last_name", length=45)
     private String lastName;
+
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
                                     inverseJoinColumns = @JoinColumn(name="book_isbn",referencedColumnName = "isbn"))
-    private Set<Book>  books;
+    private Set<Book>  books=new HashSet<>();
 
     public Set<Book> getBooks() {
         return books;
@@ -51,19 +55,19 @@ public class Author {
         this.id = id;
     }
 
-    public String getFirst_name() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirst_name(String first_name) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLast_name() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLast_name(String last_name) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20230531112230" author="Victor">
+        <createTable tableName="book">
+            <column name="isbn" type="varchar(13)"> </column>
+            <column name="name" type="varchar(100)"> </column>
+            <column name="publisher_id" type="int"> </column>
+            <column name="publisher_year" type="varchar(4)"> </column>
+            <column name="copies" type="int"> </column>
+            <column name="picture" type="varchar(255)"> </column>
+        </createTable>
+        <addPrimaryKey tableName="book" columnNames="isbn"></addPrimaryKey>
+
+        <addNotNullConstraint columnDataType="varchar(13)"
+                              columnName="isbn"
+                              constraintName="notnull3"
+                              schemaName="public"
+                              tableName="book"
+                              validate="true"/>
+
+        <addUniqueConstraint  columnNames="isbn"
+                              constraintName="unique3"
+                              deferrable="true"
+                              disabled="true"
+                              initiallyDeferred="true"
+                              schemaName="public"
+                              tableName="book"
+                              validate="true"/>
+        <addForeignKeyConstraint  baseColumnNames="publisher_id"
+                                  baseTableName="book"
+                                  baseTableSchemaName="public"
+                                  constraintName="fk_id_publisher"
+                                  deferrable="true"
+                                  initiallyDeferred="true"
+                                  onDelete="SET NULL"
+                                  onUpdate="RESTRICT"
+                                  referencedColumnNames="id"
+                                  referencedTableName="publisher"
+                                  referencedTableSchemaName="public"
+                                  validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

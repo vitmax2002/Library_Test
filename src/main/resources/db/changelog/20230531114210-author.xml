@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20230531114210" author="Victor">
+        <createTable tableName="author">
+            <column name="id" type="int"> </column>
+            <column name="first_name" type="varchar(45)"> </column>
+            <column name="last_name" type="varchar(45)"></column>
+
+        </createTable>
+        <addPrimaryKey tableName="author" columnNames="id"></addPrimaryKey>
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="public"
+                          startWith="1"
+                          tableName="author"/>
+
+        <addNotNullConstraint columnDataType="int"
+                              columnName="id"
+                              constraintName="notnull1"
+                              schemaName="public"
+                              tableName="author"
+                              validate="true"/>
+
+        <addUniqueConstraint  columnNames="id"
+                              constraintName="unique1"
+                              deferrable="true"
+                              disabled="true"
+                              initiallyDeferred="true"
+                              schemaName="public"
+                              tableName="author"
+                              validate="true"/>
+    </changeSet>
+<!--
+<changeSet id="20230531112250" author="Victor">
+        <createTable tableName="book_author">
+            <column name="author_id" type="int"> </column>
+            <column name="book_isbn" type="varchar(13)"> </column>
+        </createTable>
+        <addForeignKeyConstraint  baseColumnNames="author_id"
+                                  baseTableName="book_author"
+                                  baseTableSchemaName="public"
+                                  constraintName="fk_id_author"
+                                  deferrable="true"
+                                  initiallyDeferred="true"
+                                  onDelete="SET NULL"
+                                  onUpdate="RESTRICT"
+                                  referencedColumnNames="id"
+                                  referencedTableName="author"
+                                  referencedTableSchemaName="public"
+                                  validate="true"/>
+        <addForeignKeyConstraint  baseColumnNames="book_isbn"
+                                  baseTableName="book_author"
+                                  baseTableSchemaName="public"
+                                  constraintName="fk_isbn_book"
+                                  deferrable="true"
+                                  initiallyDeferred="true"
+                                  onDelete="SET NULL"
+                                  onUpdate="RESTRICT"
+                                  referencedColumnNames="isbn"
+                                  referencedTableName="book"
+                                  referencedTableSchemaName="public"
+                                  validate="true"/>
+    </changeSet>
+    -->
+</databaseChangeLog>

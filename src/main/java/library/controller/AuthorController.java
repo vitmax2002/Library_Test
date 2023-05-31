@@ -1,6 +1,7 @@
 package library.controller;
 
 import library.model.Author;
+import library.model.AuthorDto;
 import library.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,26 +19,26 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping
+    @GetMapping("/show")
     public ResponseEntity<List<Author>> getAll() {
         return new ResponseEntity<>(authorService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Author> getById(@PathVariable("id") int id) {
         return new ResponseEntity<>(authorService.getById(id),HttpStatus.FOUND);
     }
-    @PostMapping
-    public ResponseEntity<Author> addBook(@RequestBody Author author) {
+    @PostMapping("/add")
+    public ResponseEntity<Author> addAuthor(@RequestBody AuthorDto author) {
         return new ResponseEntity<>(authorService.createAuthor(author),HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Author> updateBook(@PathVariable int id, @RequestBody Author author) {
         return new ResponseEntity<>(authorService.updateAuthor(id, author),HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable("id") int id) {
         return new ResponseEntity<>(authorService.delete(id),HttpStatus.ACCEPTED);
     }

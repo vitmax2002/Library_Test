@@ -1,21 +1,28 @@
 package library.service;
 
+import library.model.Author;
 import library.model.Book;
+import library.model.BookSaveDto;
 import library.model.Publisher;
+import library.repository.AuthorRepository;
 import library.repository.BookRepository;
 import library.repository.PublisherRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class BookService {
+    private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
 
-    public BookService(BookRepository repository, PublisherRepository publisherRepository) {
+    public BookService(AuthorRepository authorRepository, BookRepository repository, PublisherRepository publisherRepository) {
+        this.authorRepository = authorRepository;
         this.bookRepository = repository;
         this.publisherRepository = publisherRepository;
     }
@@ -31,6 +38,14 @@ public class BookService {
         toSave.setPublishYear(dto.publishYear());
         toSave.setCopies(dto.copies());
         toSave.setPicture(dto.picture());
+        for(int i: dto.authors())
+        {
+            Author author=authorRepository.findById(i).orElseThrow(()->new NoSuchElementException("Nu este autor cu idul: "+i));
+            Set<Author> set= new HashSet<>();
+            set.addAll(toSave.getAuthors());
+            set.add(author);
+            toSave.setAuthors(set);
+        }
         return bookRepository.save(toSave);
     }
 

@@ -1,5 +1,6 @@
 package library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -17,7 +18,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="publisher_id",referencedColumnName = "id")
     private Publisher publisher;
-    @Column(name="publisher_year",length =4 )
+    @Column(name="publisher_year",length =20)
     private String publishYear;
     @Column(name="copies")
     private int copies;
@@ -45,8 +46,9 @@ public class Book {
         this.authors = authors;
     }
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
-   private Set<Author> authors;
+   private Set<Author> authors=new HashSet<>();
     public Book(String isbn,
                 String name,
                 Publisher publisher,

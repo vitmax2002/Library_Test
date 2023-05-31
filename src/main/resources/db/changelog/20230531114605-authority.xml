@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20230531114605" author="Victor">
+        <createTable tableName="authority">
+            <column name="name" type="varchar(50)"></column>
+        </createTable>
+        <addPrimaryKey tableName="authority" columnNames="name"/>
+        <addNotNullConstraint columnDataType="varchar(50)"
+                              columnName="name"
+                              constraintName="notnull7"
+                              schemaName="public"
+                              tableName="authority"
+                              validate="true"/>
+        <addUniqueConstraint  columnNames="name"
+                              constraintName="unique5"
+                              deferrable="true"
+                              disabled="true"
+                              initiallyDeferred="true"
+                              schemaName="public"
+                              tableName="authority"
+                              validate="true"/>
+        <insert  dbms="postgresql"
+                 schemaName="public"
+                 tableName="authority">
+
+            <column  name="name"  value="LIBRARIAN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20230531114710" author="Victor">
+        <insert  dbms="postgresql"
+                 schemaName="public"
+                 tableName="authority">
+        <column  name="name"  value="ADMINISTRATOR"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

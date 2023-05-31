@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/**","/books/show")
+                .requestMatchers("/user/**","/books/show")
                 .permitAll()
                 .requestMatchers("/books/**").hasAnyAuthority("ADMINISTRATOR","LIBRARIAN")
                 .anyRequest()
