@@ -1,0 +1,291 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+
+
+
+
+        <changeSet id="2" author="Victor">
+            <createTable tableName="author">
+                <column name="id" type="int"> </column>
+                <column name="first_name" type="varchar(45)"> </column>
+                <column name="last_name" type="varchar(45)"></column>
+
+            </createTable>
+            <addPrimaryKey tableName="author" columnNames="id"></addPrimaryKey>
+            <addAutoIncrement columnDataType="int"
+                              columnName="id"
+                              incrementBy="1"
+                              schemaName="public"
+                              startWith="1"
+                              tableName="author"/>
+
+            <addNotNullConstraint columnDataType="int"
+                                  columnName="id"
+                                  constraintName="notnull1"
+                                  schemaName="public"
+                                  tableName="author"
+                                  validate="true"/>
+
+            <addUniqueConstraint  columnNames="id"
+                                  constraintName="unique1"
+                                  deferrable="true"
+                                  disabled="true"
+                                  initiallyDeferred="true"
+                                  schemaName="public"
+                                  tableName="author"
+                                  validate="true"/>
+
+            <createTable tableName="publisher">
+                <column name="id" type="int"> </column>
+                <column name="name" type="varchar(100)"> </column>
+            </createTable>
+            <addPrimaryKey tableName="publisher" columnNames="id"></addPrimaryKey>
+            <addAutoIncrement columnDataType="int"
+                              columnName="id"
+                              incrementBy="1"
+                              schemaName="public"
+                              startWith="1"
+                              tableName="publisher"/>
+
+            <addNotNullConstraint columnDataType="int"
+                                  columnName="id"
+                                  constraintName="notnull2"
+                                  schemaName="public"
+                                  tableName="publisher"
+                                  validate="true"/>
+
+            <addUniqueConstraint  columnNames="id"
+                                  constraintName="unique2"
+                                  deferrable="true"
+                                  disabled="true"
+                                  initiallyDeferred="true"
+                                  schemaName="public"
+                                  tableName="publisher"
+                                  validate="true"/>
+
+            <createTable tableName="book">
+                <column name="isbn" type="varchar(13)"> </column>
+                <column name="name" type="varchar(100)"> </column>
+                <column name="publisher_id" type="int"> </column>
+                <column name="publisher_year" type="varchar(4)"> </column>
+                <column name="copies" type="int"> </column>
+                <column name="picture" type="varchar(255)"> </column>
+            </createTable>
+            <addPrimaryKey tableName="book" columnNames="isbn"></addPrimaryKey>
+
+            <addNotNullConstraint columnDataType="varchar(13)"
+                                  columnName="isbn"
+                                  constraintName="notnull3"
+                                  schemaName="public"
+                                  tableName="book"
+                                  validate="true"/>
+
+            <addUniqueConstraint  columnNames="isbn"
+                                  constraintName="unique3"
+                                  deferrable="true"
+                                  disabled="true"
+                                  initiallyDeferred="true"
+                                  schemaName="public"
+                                  tableName="book"
+                                  validate="true"/>
+            <addForeignKeyConstraint  baseColumnNames="publisher_id"
+                                      baseTableName="book"
+                                      baseTableSchemaName="public"
+                                      constraintName="fk_id_publisher"
+                                      deferrable="true"
+                                      initiallyDeferred="true"
+                                      onDelete="SET NULL"
+                                      onUpdate="RESTRICT"
+                                      referencedColumnNames="id"
+                                      referencedTableName="publisher"
+                                      referencedTableSchemaName="public"
+                                      validate="true"/>
+
+
+            <createTable tableName="book_author">
+                <column name="author_id" type="int"> </column>
+                <column name="book_isbn" type="varchar(13)"> </column>
+            </createTable>
+            <addForeignKeyConstraint  baseColumnNames="author_id"
+                                      baseTableName="book_author"
+                                      baseTableSchemaName="public"
+                                      constraintName="fk_id_author"
+                                      deferrable="true"
+                                      initiallyDeferred="true"
+                                      onDelete="SET NULL"
+                                      onUpdate="RESTRICT"
+                                      referencedColumnNames="id"
+                                      referencedTableName="author"
+                                      referencedTableSchemaName="public"
+                                      validate="true"/>
+            <addForeignKeyConstraint  baseColumnNames="book_isbn"
+                                      baseTableName="book_author"
+                                      baseTableSchemaName="public"
+                                      constraintName="fk_isbn_book"
+                                      deferrable="true"
+                                      initiallyDeferred="true"
+                                      onDelete="SET NULL"
+                                      onUpdate="RESTRICT"
+                                      referencedColumnNames="isbn"
+                                      referencedTableName="book"
+                                      referencedTableSchemaName="public"
+                                      validate="true"/>
+        </changeSet>
+<!--
+    <changeSet id="10" author="Victor">
+        <createTable tableName="client">
+            <column name="id" type="int"></column>
+            <column name="first_name" type="varchar(45)"></column>
+            <column name="last_name" type="varchar(45)"></column>
+            <column name="address" type="varchar(50)"></column>
+            <column name="phone" type="varchar(31)"></column>
+        </createTable>
+        <addPrimaryKey tableName="client" columnNames="id"/>
+
+        <addNotNullConstraint columnDataType="int"
+                              columnName="id"
+                              constraintName="notnull4"
+                              schemaName="public"
+                              tableName="client"
+                              validate="true"/>
+
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="public"
+                          startWith="1"
+                          tableName="client"/>
+
+
+    </changeSet>
+-->
+
+    <!--
+        <changeSet id="4" author="Victor">
+            <createTable tableName="user">
+                <column name="id" type="int"></column>
+                <column name="username" type="varchar(100)"></column>
+                <column name="password" type="varchar(100)"></column>
+            </createTable>
+            <addPrimaryKey tableName="user" columnNames="id"/>
+            <addUniqueConstraint  columnNames="id"
+                                  constraintName="unique4"
+                                  deferrable="true"
+                                  disabled="true"
+                                  initiallyDeferred="true"
+                                  schemaName="public"
+                                  tableName="user"
+                                  validate="true"/>
+            <addNotNullConstraint columnDataType="int"
+                                  columnName="id"
+                                  constraintName="notnull6"
+                                  schemaName="public"
+                                  tableName="user"
+                                  validate="true"/>
+            <addAutoIncrement columnDataType="int"
+                              columnName="id"
+                              incrementBy="1"
+                              schemaName="public"
+                              startWith="1"
+                              tableName="user"/>
+
+
+            <createTable tableName="authority">
+                <column name="name" type="varchar(50)"></column>
+            </createTable>
+            <addPrimaryKey tableName="authority" columnNames="name"/>
+            <addNotNullConstraint columnDataType="varchar(50)"
+                                  columnName="name"
+                                  constraintName="notnull7"
+                                  schemaName="public"
+                                  tableName="authority"
+                                  validate="true"/>
+            <addUniqueConstraint  columnNames="name"
+                                  constraintName="unique5"
+                                  deferrable="true"
+                                  disabled="true"
+                                  initiallyDeferred="true"
+                                  schemaName="public"
+                                  tableName="authority"
+                                  validate="true"/>
+            <insert  dbms="postgresql"
+                     schemaName="public"
+                     tableName="authority">
+                <column  name="name"  value="Administrator"/>
+                <column  name="name"  value="Librarian"/>
+            </insert>
+        </changeSet>
+            <createTable tableName="user_authority">
+                <column name="user_id" type="int"></column>
+                <column name="authority_name" type="varchar(50)"></column>
+            </createTable>
+            <addForeignKeyConstraint  baseColumnNames="user_id"
+                                      baseTableName="user_authority"
+                                      baseTableSchemaName="public"
+                                      constraintName="fk_id_user"
+                                      deferrable="true"
+                                      initiallyDeferred="true"
+                                      onDelete="SET NULL"
+                                      onUpdate="RESTRICT"
+                                      referencedColumnNames="id"
+                                      referencedTableName="user"
+                                      referencedTableSchemaName="public"
+                                      validate="true"/>
+
+            <addForeignKeyConstraint  baseColumnNames="authority_name"
+                                      baseTableName="user_authority"
+                                      baseTableSchemaName="public"
+                                      constraintName="fk_name_author"
+                                      deferrable="true"
+                                      initiallyDeferred="true"
+                                      onDelete="SET NULL"
+                                      onUpdate="RESTRICT"
+                                      referencedColumnNames="name"
+                                      referencedTableName="authority"
+                                      referencedTableSchemaName="public"
+                                      validate="true"/>
+
+        </changeSet>
+    -->
+<changeSet id="5" author="Victor">
+
+    <insert  dbms="postgresql"
+             schemaName="public"
+             tableName="authority">
+        <column  name="name"  value="Administrator"/>
+
+    </insert>
+
+</changeSet>
+
+    <changeSet  author="Victor"  id="6">
+        <dropTable  cascadeConstraints="true"
+                    schemaName="public"
+                    tableName="user"/>
+    </changeSet>
+
+
+    <changeSet id="11" author="Victor">
+    <update  schemaName="public" tableName="authority">
+        <column name="name" value="ADMINISTRATOR"/>
+        <where>name='Administrator'</where>
+    </update>
+        <update  schemaName="public" tableName="authority">
+            <column name="name" value="LIBRARIAN"/>
+            <where>name='Librarian'</where>
+        </update>
+    </changeSet>
+
+    <changeSet  author="Victor"  id="12">
+        <delete  schemaName="public"
+                 tableName="authority">
+            <where>name='valoare'</where>
+        </delete>
+    </changeSet>
+    </databaseChangeLog>
