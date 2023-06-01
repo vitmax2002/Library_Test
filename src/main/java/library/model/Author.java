@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,9 +22,10 @@ public class Author {
     private String lastName;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//    @JoinTable(name = "book_author",joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
-//                                    inverseJoinColumns = @JoinColumn(name="book_isbn",referencedColumnName = "isbn"))
-    private Set<Book>  books=new HashSet<>();
+    @JsonIgnoreProperties(value ="authors",allowSetters = true)
+    @JoinTable(name = "book_author",joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
+                                    inverseJoinColumns = @JoinColumn(name="book_isbn",referencedColumnName = "isbn"))
+    private Set<Book> books=new HashSet<>();
 
     public Set<Book> getBooks() {
         return books;

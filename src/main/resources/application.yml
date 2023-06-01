@@ -23,13 +23,13 @@ spring:
     name: liquibase demo
 
 
-logging:
-  level:
-    org.springframework.web: ERROR
-    library.authentication.controller: DEBUG
-  pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
-    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
-    #name: C:/IT projects/coda.log
-  file:
-    name: C:/IT projects/Repository Library_Test/Library_Test/logging.log
+#logging:
+#  level:
+#    org.springframework.web: ERROR
+#    library.authentication.controller: DEBUG
+#  pattern:
+#    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+#    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+#    #name: C:/IT projects/coda.log
+#  file:
+#    name: C:/IT projects/Repository Library_Test/Library_Test/logging.log

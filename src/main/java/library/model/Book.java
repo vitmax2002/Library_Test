@@ -2,6 +2,7 @@ package library.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -46,21 +47,20 @@ public class Book {
         this.authors = authors;
     }
 
-   @JsonIgnore
+    @JsonIgnoreProperties(value ="books",allowSetters = true)
     @ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
-   private Set<Author> authors=new HashSet<>();
-    public Book(String isbn,
-                String name,
-                Publisher publisher,
-                String publishYear,
-                int copies,
-                String picture) {
+    private Set<Author> authors=new HashSet<>();
+
+    public Book(String isbn, String name, Publisher publisher, String publishYear,
+                int copies, String picture, Set<BorrowedBook> borrowedBooks, Set<Author> authors) {
         this.isbn = isbn;
         this.name = name;
         this.publisher = publisher;
         this.publishYear = publishYear;
         this.copies = copies;
         this.picture = picture;
+        this.borrowedBooks = borrowedBooks;
+        this.authors = authors;
     }
 
     public Book() {
