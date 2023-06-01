@@ -46,7 +46,7 @@ public class Book {
         this.authors = authors;
     }
 
-    @JsonIgnore
+   @JsonIgnore
     @ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
    private Set<Author> authors=new HashSet<>();
     public Book(String isbn,

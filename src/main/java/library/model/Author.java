@@ -21,8 +21,8 @@ public class Author {
     private String lastName;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name = "book_author",joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
-                                    inverseJoinColumns = @JoinColumn(name="book_isbn",referencedColumnName = "isbn"))
+//    @JoinTable(name = "book_author",joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
+//                                    inverseJoinColumns = @JoinColumn(name="book_isbn",referencedColumnName = "isbn"))
     private Set<Book>  books=new HashSet<>();
 
     public Set<Book> getBooks() {

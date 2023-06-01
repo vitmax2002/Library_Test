@@ -40,12 +40,14 @@ public class BookService {
         toSave.setPicture(dto.picture());
         for(int i: dto.authors())
         {
+            System.out.println(i);
             Author author=authorRepository.findById(i).orElseThrow(()->new NoSuchElementException("Nu este autor cu idul: "+i));
             Set<Author> set= new HashSet<>();
             set.addAll(toSave.getAuthors());
             set.add(author);
             toSave.setAuthors(set);
         }
+        System.out.println(toSave.getAuthors());
         return bookRepository.save(toSave);
     }
 
