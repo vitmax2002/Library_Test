@@ -95,6 +95,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>library_test</finalName>
 	</build>
 
 </project>
