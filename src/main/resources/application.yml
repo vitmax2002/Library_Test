@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/coda2
+    url: jdbc:postgresql://postgres:5432/coda2
     username: postgres
     password: 13047804kl
 
