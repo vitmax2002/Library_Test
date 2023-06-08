@@ -1,16 +1,21 @@
 package com.esempla.library.controller;
 
+
 import com.esempla.library.service.PublisherService;
 import com.esempla.library.model.Publisher;
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/publisher")
 public class PublisherController {
+    private Logger log= LoggerFactory.getLogger(PublisherController.class);
 
     private final PublisherService publisherService;
 
@@ -18,34 +23,49 @@ public class PublisherController {
         this.publisherService = publisherService;
     }
 
+
     @GetMapping("/show")
     public ResponseEntity<List<Publisher>> getAll()
     {
-        return new ResponseEntity<>(publisherService.getAll(), HttpStatus.FOUND);
+        log.debug("Rest request to view all publishers");
+        List<Publisher> publishers=publisherService.getAll();
+        return ResponseEntity.ok().body(publishers);
     }
+
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Publisher> getById(@PathVariable("id") int id)
     {
-        return new ResponseEntity<>(publisherService.getById(id),HttpStatus.FOUND);
+        Publisher publisher=publisherService.getById(id);
+        log.debug("Publisher with id {} is {}",id,publisher);
+        return ResponseEntity.ok().body(publisher);
     }
+
 
     @PostMapping("/add")
     public ResponseEntity<Publisher> addPublisher(@RequestBody Publisher publisher)
     {
-        return new ResponseEntity<>(publisherService.createPublisher(publisher),HttpStatus.CREATED);
+        Publisher publisherAdd=publisherService.createPublisher(publisher);
+        log.debug("Publisher {} was added",publisher);
+        return ResponseEntity.ok().body(publisherAdd);
     }
+
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Publisher> updatePublisher(@PathVariable int id,@RequestParam String name)
     {
-        return new ResponseEntity<>(publisherService.updatePublisher(id,name),HttpStatus.ACCEPTED);
+        Publisher publisher=publisherService.updatePublisher(id,name);
+        log.debug("Publisher with id {} was updated",id);
+        return ResponseEntity.ok().body(publisher);
     }
 
+
     @DeleteMapping ("/delete/{id}")
-    public ResponseEntity<String> deletePublisher(@PathVariable("id") int id)
+    public ResponseEntity<Void> deletePublisher(@PathVariable("id") int id)
     {
-         return new ResponseEntity<>(publisherService.delete(id),HttpStatus.OK);
+        publisherService.delete(id);
+        log.debug("Publisher with id {} was deleted",id);
+         return ResponseEntity.noContent().build();
     }
 
 

@@ -46,7 +46,7 @@ public class Book {
         this.authors = authors;
     }
 
-    @JsonIgnoreProperties(value ="books",allowSetters = true)
+//    @JsonIgnore
     @ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
     private Set<Author> authors=new HashSet<>();
 

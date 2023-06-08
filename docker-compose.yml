@@ -6,7 +6,7 @@ services:
     container_name: 'db'
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 13047804kl
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: coda2
     ports:
     - 5432:5432
@@ -21,6 +21,6 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/coda2
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=13047804kl
+      - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 

@@ -3,9 +3,9 @@ package com.esempla.library.controller;
 import com.esempla.library.service.BookService;
 import com.esempla.library.model.Book;
 import com.esempla.library.service.dto.BookSaveDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,38 +13,48 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
-@Api(protocols = "http",value = "Books management")
 public class BookController {
-
+    private Logger log= LoggerFactory.getLogger(BookController.class);
     private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
+
     @GetMapping("/show")
-    @ApiOperation(value = "O descriere la endpoint")
     public ResponseEntity<List<Book>> getAll() {
-        return new ResponseEntity<>(bookService.getAll(), HttpStatus.FOUND);
+        log.debug("Rest request to view all books");
+        List<Book> books = bookService.getAll();
+        return ResponseEntity.ok().body(books);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Book> getById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(bookService.getById(id),HttpStatus.FOUND);
+        Book book=bookService.getById(id);
+        log.debug("Book with id {} is {}",id,book);
+        return ResponseEntity.ok().body(book);
     }
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/add")
     public ResponseEntity<Book> addBook(@RequestBody BookSaveDto dto) {
-        return new ResponseEntity<>(bookService.createBook(dto),HttpStatus.CREATED);
+        Book book=bookService.createBook(dto);
+        return ResponseEntity.ok().body(book);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/update/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody BookSaveDto book) {
-        return new ResponseEntity<>(bookService.updateBook(id, book),HttpStatus.OK);
+        Book bookUpdate=bookService.updateBook(id, book);
+        return ResponseEntity.ok().body(bookUpdate);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable("id") String id) {
-        return new ResponseEntity<>(bookService.delete(id),HttpStatus.ACCEPTED);
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") String id) {
+        bookService.delete(id);
+        log.debug("book with id {} was deleted",id);
+        return ResponseEntity.noContent().build();
     }
 
 

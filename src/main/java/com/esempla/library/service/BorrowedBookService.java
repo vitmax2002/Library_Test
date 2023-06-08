@@ -7,6 +7,8 @@ import com.esempla.library.model.Client;
 import com.esempla.library.repository.BookRepository;
 import com.esempla.library.repository.BorrowedBookRepository;
 import com.esempla.library.repository.ClientRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class BorrowedBookService {
+    private Logger log= LoggerFactory.getLogger(BorrowedBook.class);
     private final ClientRepository repositoryClient;
     private final BookRepository repositoryBook;
     private final BorrowedBookRepository borrowedBookRepository;
@@ -39,9 +42,8 @@ public class BorrowedBookService {
         borrowedBook.setClient(client);
         borrowedBook.setBorrowDate(book.borrowDate());
        repositoryBook.save(book2);
-
-
-        return borrowedBookRepository.save(borrowedBook);
+        log.debug("Book {} was added",book);
+       return borrowedBookRepository.save(borrowedBook);
     }
 
     public List<BorrowedBook> getAll() {

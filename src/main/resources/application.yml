@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/coda2
     username: postgres
-    password: 13047804kl
+    password: postgres
 
   jpa:
     properties:
@@ -21,6 +21,13 @@ spring:
 
   application:
     name: liquibase demo
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+  api-docs:
+    path: /com.esempla
 
 
 #logging:
