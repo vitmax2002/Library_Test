@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/client")
+@RequestMapping("/api/v1/client")
 public class ClientController {
 
     private Logger log= LoggerFactory.getLogger(ClientController.class);

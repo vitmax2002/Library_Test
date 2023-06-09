@@ -44,6 +44,7 @@ public class BookService {
         toSave.setPicture(dto.picture());
         Set<Author> autori=new HashSet<>();
         if(dto.authors()!=null){
+            log.debug("Verificarea daca exista autori cu idul dat");
             for (var authorId : dto.authors()) {
                 authorRepository.findById(authorId).orElseThrow(() -> new NoSuchElementException("Nu exista autor cu id:" + authorId));
             }
@@ -82,6 +83,7 @@ public class BookService {
         book.setPicture(dto.picture());
         Set<Author> autori=new HashSet<>();
         if(dto.authors()!=null) {
+            log.debug("Verificarea daca exista autori cu idul dat");
             for (var authorId : dto.authors()) {
                 authorRepository.findById(authorId).orElseThrow(() -> new NoSuchElementException("Nu exista autor cu id:" + authorId));
             }
@@ -104,7 +106,7 @@ public class BookService {
 
     public void delete(String id) {
         Book book2 = bookRepository.findById(id).orElseThrow(()->new NoSuchElementException("nu exista element cu asa id"));
-
+        log.debug("Stergerea cartii daca o detine cineva din autori");
         for(var author: authorRepository.findAll())
         {
             if(author.getBooks().contains(book2))

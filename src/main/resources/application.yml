@@ -26,17 +26,19 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
-  api-docs:
-    path: /com.esempla
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.esempla.library: DEBUG
+  pattern:
+    console: ' %black(%d{ISO8601}) %highlight(%-5level) [%red(%t)] %green(%C{1}): %msg%n%throwable'
+    file: '%d %p %C{1} [%t] %m%n'
+  file:
+    name: ${user.home}/spring-boot-logger.log
 
 
-#logging:
-#  level:
-#    org.springframework.web: ERROR
-#    library.authentication.controller: DEBUG
-#  pattern:
-#    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
-#    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
-#    #name: C:/IT projects/coda.log
-#  file:
-#    name: C:/IT projects/Repository Library_Test/Library_Test/logging.log
+
+#  api-docs:
+#    path: /com.esempla
+

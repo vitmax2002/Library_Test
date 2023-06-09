@@ -72,4 +72,23 @@ public class Author {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString()
+    {
+        return "firstName: "+firstName+" lastName: "+lastName;
+    }
+
+    @Override
+    public int hashCode() {
+        return  id * firstName.hashCode() * lastName.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this==object) return true;
+        if(!(object instanceof Author)) return false;
+        Author author=(Author) object;
+        return this.id==author.id && this.firstName.equals(author.firstName) && this.lastName.equals(author.lastName);
+    }
 }

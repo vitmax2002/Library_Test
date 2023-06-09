@@ -81,4 +81,25 @@ public class Client {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "id: "+id+" firstName: "+firstName+" lastName: "+lastName+" address: "+address+" phone: "+phone;
+    }
+
+    @Override
+    public int hashCode() {
+        return  id* firstName.hashCode() * lastName.hashCode()* address.hashCode()* phone.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this==object) return true;
+        if(!(object instanceof Client)) return false;
+        Client client=(Client) object;
+        return this.id==client.id && this.firstName.equals(client.firstName) && this.lastName.equals(client.lastName) &&
+                this.address.equals(client.address)&& this.phone.equals(client.phone);
+    }
 }

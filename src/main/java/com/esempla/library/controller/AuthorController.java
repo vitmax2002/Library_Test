@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/authors")
+@RequestMapping("/api/v1/authors")
 public class AuthorController {
     private Logger log= LoggerFactory.getLogger(AuthorController.class);
     private final AuthorService authorService;

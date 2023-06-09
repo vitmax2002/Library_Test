@@ -41,4 +41,25 @@ public class Authority {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "name: "+name;
+    }
+
+    @Override
+    public int hashCode() {
+        return  name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this==object) return true;
+        if(!(object instanceof Authority)) return false;
+        Authority authority=(Authority) object;
+        return  this.name.equals(authority.name);
+    }
+
 }

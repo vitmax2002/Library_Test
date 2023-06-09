@@ -99,4 +99,24 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "id: "+id+" userName: "+username+" password: "+password;
+    }
+
+    @Override
+    public int hashCode() {
+        return  id* username.hashCode()* password.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this==object) return true;
+        if(!(object instanceof User)) return false;
+        User user=(User) object;
+        return this.id==user.id && this.username.equals(user.username) && this.password.equals(user.password);
+    }
 }

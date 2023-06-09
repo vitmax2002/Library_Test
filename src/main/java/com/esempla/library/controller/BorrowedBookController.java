@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/borrow")
+@RequestMapping("/api/v1/borrow")
 public class BorrowedBookController {
     private Logger log= LoggerFactory.getLogger(BorrowedBookController.class);
     private final BorrowedBookService borrowedBookService;
@@ -28,6 +28,7 @@ public class BorrowedBookController {
         BorrowedBook book=borrowedBookService.createBook(bookDto);
         return ResponseEntity.ok().body(book);
     }
+
 
     @GetMapping("/show")
     public ResponseEntity<List<BorrowedBook>> showBorrowers()

@@ -8,6 +8,8 @@ import com.esempla.library.service.dto.AuthenticationDto;
 import com.esempla.library.service.dto.RegisterDto;
 import com.esempla.library.repository.AuthorityRepository;
 import com.esempla.library.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +19,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class AuthenticationService {
-
+   private Logger log= LoggerFactory.getLogger(AuthenticationService.class);
     private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -48,6 +50,7 @@ public class AuthenticationService {
                 break;
             }
         }
+        log.debug("Validarea autoritaii userului");
         if(authorityEnum==null)
             throw new NoSuchElementException("Nu este asa element in Enumeratie");
         Authority authority=authorityRepository.findByName(authorityEnum)
@@ -55,6 +58,7 @@ public class AuthenticationService {
         user.setAuthority(authority);
         userRepository.save(user);
         var jwtToken=jwtService.generateToken(user);
+        log.debug("Generarea tokenului pentru userul:{}",user);
         return new AuthenticationResponse(jwtToken);
     }
 
@@ -62,6 +66,7 @@ public class AuthenticationService {
     {
        User user = userRepository.findById(id).orElseThrow(()->new NoSuchElementException("Nu exista element cu asa id"));
        String s=user.getUsername();
+        log.debug("Stergerea autoritatii userului");
        if(user.getAuthority()!=null)
            user.setAuthority(null);
      userRepository.deleteById(id);
@@ -73,6 +78,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.username(),request.password()));
         var user=userRepository.findByUsername(request.username()).orElseThrow();
+        log.debug("Generarea tokenului userului");
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
     }

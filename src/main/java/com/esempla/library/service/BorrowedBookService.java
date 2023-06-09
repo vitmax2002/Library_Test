@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class BorrowedBookService {
-    private Logger log= LoggerFactory.getLogger(BorrowedBook.class);
+    private Logger log= LoggerFactory.getLogger(BorrowedBookService.class);
     private final ClientRepository repositoryClient;
     private final BookRepository repositoryBook;
     private final BorrowedBookRepository borrowedBookRepository;
@@ -32,7 +32,7 @@ public class BorrowedBookService {
         BorrowedBook borrowedBook = new BorrowedBook();
         Book book2 = repositoryBook.findById(book.book())
                 .orElseThrow(() -> new NoSuchElementException("Nu exista carti cu acest id"));
-
+        log.debug("Verificarea daca mai exista carti de tipul dat");
         if (book2.getCopies() == 0) throw new NoSuchElementException("Nu mai sunt carti de acest tip");
         book2.setCopies(book2.getCopies() - 1);
 
@@ -47,8 +47,18 @@ public class BorrowedBookService {
     }
 
     public List<BorrowedBook> getAll() {
+        log.debug("Toate cartile imprumutate");
         return borrowedBookRepository.findAll();
     }
+
+    public void delete(int id) {
+        BorrowedBook book2 = borrowedBookRepository.findById(id).orElseThrow(()->new NoSuchElementException("nu exista element cu asa id"));
+        log.debug("Incrementarea nr de copii a cartii");
+        book2.getBook().setCopies(book2.getBook().getCopies()+1);
+        repositoryBook.save(book2.getBook());
+        borrowedBookRepository.deleteById(id);
+    }
+
 /*
     public Book getById(String id) {
         return repository.findById(id)
@@ -67,15 +77,6 @@ public class BorrowedBookService {
         return repository.save(book);
     }
 */
-    public String delete(int id) {
-        BorrowedBook book2 = borrowedBookRepository.findById(id).orElseThrow(()->new NoSuchElementException("nu exista element cu asa id"));
-        book2.getBook().setCopies(book2.getBook().getCopies()+1);
-        repositoryBook.save(book2.getBook());
-        String s=book2.getBook().getName();
-        int nr=book2.getBook().getCopies();
-        borrowedBookRepository.deleteById(id);
-        return "Cartea: "+s+" a fost eliberata/n"+
-                "In stoc au ramas: "+nr;
-    }
+
 
 }

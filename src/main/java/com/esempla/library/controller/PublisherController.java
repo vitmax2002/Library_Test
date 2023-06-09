@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/publisher")
+@RequestMapping("/api/v1/publisher")
 public class PublisherController {
     private Logger log= LoggerFactory.getLogger(PublisherController.class);
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authority")
+@RequestMapping("/api/v1/authority")
 public class AuthorityController {
     private Logger log= LoggerFactory.getLogger(AuthorityController.class);
     private final AuthorityRepository authorityRepository;

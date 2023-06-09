@@ -36,4 +36,23 @@ public class Publisher {
     }
 
 
+
+    @Override
+    public String toString()
+    {
+        return "id: "+id+" name: "+name;
+    }
+
+    @Override
+    public int hashCode() {
+        return  id* name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this==object) return true;
+        if(!(object instanceof Publisher)) return false;
+        Publisher publisher=(Publisher) object;
+        return this.id==publisher.id && this.name.equals(publisher.name);
+    }
 }

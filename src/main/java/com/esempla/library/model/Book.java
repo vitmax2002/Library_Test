@@ -112,4 +112,26 @@ public class Book {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "isbn: "+isbn+" name: "+name+" publisher: "+publisher+" publishYear: "+publishYear+
+                " copies: "+copies+" picture: "+picture;
+    }
+
+    @Override
+    public int hashCode() {
+        return  isbn.hashCode()* name.hashCode() * publisher.hashCode()* publishYear.hashCode()* copies* picture.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this==object) return true;
+        if(!(object instanceof Book)) return false;
+        Book book=(Book) object;
+        return this.isbn.equals(book.isbn) && this.name.equals(book.name) && this.publisher.equals(book.publisher) &&
+                copies==copies && this.picture.equals(book.picture);
+    }
 }
