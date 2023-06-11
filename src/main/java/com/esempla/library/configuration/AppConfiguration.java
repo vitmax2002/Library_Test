@@ -1,8 +1,6 @@
 package com.esempla.library.configuration;
 
 import com.esempla.library.repository.UserRepository;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @ComponentScan(basePackages = "com.esempla.library.configuration")
-public class SecurityConfig2 {
+public class AppConfiguration {
 
 private final UserRepository userRepository;
 
-    public SecurityConfig2(UserRepository userRepository) {
+    public AppConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -51,4 +49,5 @@ private final UserRepository userRepository;
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
 }
