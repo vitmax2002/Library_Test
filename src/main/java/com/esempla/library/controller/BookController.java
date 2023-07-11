@@ -2,13 +2,23 @@ package com.esempla.library.controller;
 
 import com.esempla.library.service.BookService;
 import com.esempla.library.model.Book;
+import com.esempla.library.service.dto.AuthenticationDto;
 import com.esempla.library.service.dto.BookSaveDto;
+import com.itextpdf.text.DocumentException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -20,8 +30,7 @@ public class BookController {
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-
-
+//    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("/show")
     public ResponseEntity<List<Book>> getAll() {
         log.debug("Rest request to view all books");

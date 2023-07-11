@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class PublisherService {
-    private Logger log= LoggerFactory.getLogger(JwtService.class);
+    private Logger log= LoggerFactory.getLogger(PublisherService.class);
     private final PublisherRepository publisherRepository;
 
     public PublisherService(PublisherRepository publisherRepository) {

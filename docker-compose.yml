@@ -1,25 +1,13 @@
 version: '3.1'
 
 services:
-  db:
-    image: 'postgres:10'
-    container_name: 'db'
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: coda2
-    ports:
-    - 5432:5432
-
-  app:
+   app:
     image: 'coda2/library:latest'
-    container_name: 'java-app'
-    depends_on:
-      - db
+    container_name: 'library-app'
     ports:
      - 8080:8080
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/coda2
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5433/coda2
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update

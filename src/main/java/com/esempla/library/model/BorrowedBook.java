@@ -2,11 +2,12 @@ package com.esempla.library.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "borrowed_book")
-public class BorrowedBook {
+public class BorrowedBook implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

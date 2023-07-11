@@ -8,11 +8,22 @@ import com.esempla.library.model.Publisher;
 import com.esempla.library.repository.AuthorRepository;
 import com.esempla.library.repository.BookRepository;
 import com.esempla.library.repository.PublisherRepository;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,16 +32,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookService {
+    @Value("${rabbitmq.exchange}")
+    private String exchange;
+    @Value("${rabbitmq.key}")
+    private String key;
+
+    private final RabbitTemplate rabbitTemplate;
     private Logger log= LoggerFactory.getLogger(BookService.class);
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
 
-    public BookService(AuthorRepository authorRepository, BookRepository repository, PublisherRepository publisherRepository) {
+    public BookService(RabbitTemplate rabbitTemplate, AuthorRepository authorRepository, BookRepository repository, PublisherRepository publisherRepository) {
+        this.rabbitTemplate = rabbitTemplate;
         this.authorRepository = authorRepository;
         this.bookRepository = repository;
         this.publisherRepository = publisherRepository;
     }
+
+
 
     public Book createBook(BookSaveDto dto)
     {
@@ -64,10 +84,16 @@ public class BookService {
     }
 
     public List<Book> getAll() {
-        return bookRepository.findAll();
+        List<Book> list=bookRepository.findAll();
+        for(Book book:list){
+            rabbitTemplate.convertAndSend(exchange,key,book);
+        }
+        return list;
     }
 
     public Book getById(String id) {
+        Book book=bookRepository.findById(id).orElseThrow();
+        //rabbitTemplate.convertAndSend(exchange,key,book);
         return bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Entitatea nu a fost găsită."));
     }

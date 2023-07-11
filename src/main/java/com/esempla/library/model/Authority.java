@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -44,22 +45,23 @@ public class Authority {
 
 
     @Override
-    public String toString()
-    {
-        return "name: "+name;
+    public String toString() {
+        return "Authority{" +
+                "name=" + name +
+                ", users=" + users +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Authority authority = (Authority) o;
+        return name == authority.name && Objects.equals(users, authority.users);
     }
 
     @Override
     public int hashCode() {
-        return  name.hashCode();
+        return Objects.hash(name, users);
     }
-
-    @Override
-    public boolean equals(Object object) {
-        if(this==object) return true;
-        if(!(object instanceof Authority)) return false;
-        Authority authority=(Authority) object;
-        return  this.name.equals(authority.name);
-    }
-
 }

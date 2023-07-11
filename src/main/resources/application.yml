@@ -1,3 +1,5 @@
+
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/coda2
@@ -22,23 +24,48 @@ spring:
   application:
     name: liquibase demo
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+  queue: libraryQueue2
+  exchange: libraryExchange
+  key: libraryKey2
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
 
 logging:
-  level:
-    org.springframework.web: ERROR
-    com.esempla.library: DEBUG
+#  level:
+#    org.springframework.web: ERROR
+#    com.esempla.library: DEBUG
+#    org.springframework.ws: TRACE
   pattern:
     console: ' %black(%d{ISO8601}) %highlight(%-5level) [%red(%t)] %green(%C{1}): %msg%n%throwable'
     file: '%d %p %C{1} [%t] %m%n'
   file:
     name: ${user.home}/spring-boot-logger.log
 
-
-
+#server:
+#  ssl:
+#    key-store: ../../keystore.jks
+#    key-store-password: 13047804kl
+#    key-alias: localhost
+#    key-password: 13047804kl
+#    enabled: true
+#    trust-store: /home/coda/Desktop/truststore.jks
+#    trust-store-password: 13047804kl
+#    client-auth: need
+#  port: 8080
+#  security:
+#    user:
+#      name: Admin
+#      password: admin
 #  api-docs:
 #    path: /com.esempla
 
